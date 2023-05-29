@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 export interface Pokemon {
   id: number;
   name: string;
@@ -9,31 +11,23 @@ export interface Pokemon {
 type FetchPokemon = (id: string) => Promise<Pokemon>;
 type FetchPokemons = () => Promise<Pokemon[]>;
 
-export const fetchPokemon: FetchPokemon = async (id) => {
-  const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-    .then((response) => {
-      return response.json();
-    })
-    .catch();
-  // .then((response) => response.results);
-
-  // console.log("@@@",Object.keys(data));
+export const fetchPokemon: FetchPokemon = cache(async (id) => {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+  const data = await response.json();
 
   return data;
-};
+});
 
-export const fetchPokemons: FetchPokemons = async () => {
-  return await fetch(`https://pokeapi.co/api/v2/pokemon?limit=100`)
-    .then((response) => response.json())
-    .then((response) =>
-      Promise.all<any[]>(
-        response.results.map(
-          async ({ url }) =>
-            await fetch(url).then((response) => response.json())
-        )
-      )
-    );
-};
+export const fetchPokemons: FetchPokemons = cache(async () => {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=100`);
+  const data = await response.json();
+
+  return await Promise.all<Pokemon[]>(
+    data.results.map(
+      async ({ url }) => await fetch(url).then((response) => response.json())
+    )
+  );
+});
 
 export function stringifyObjects(k: string, v: unknown) {
   return k && v && typeof v !== "number"

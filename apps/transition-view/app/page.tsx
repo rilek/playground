@@ -1,4 +1,4 @@
-import Link from "./Link";
+import Link from "../src/components/Link";
 import { Pokemon, fetchPokemons } from "./utils";
 
 const Card = ({ id, name, sprites: { front_default: imageUrl } }: Pokemon) => {
@@ -8,7 +8,7 @@ const Card = ({ id, name, sprites: { front_default: imageUrl } }: Pokemon) => {
         <img
           src={imageUrl}
           className={`w-full aspect-square`}
-          data-id={`product-id-${id}`}
+          data-id={`pokemon-id-${id}`}
           alt=""
         />
       </div>
@@ -19,8 +19,8 @@ const Card = ({ id, name, sprites: { front_default: imageUrl } }: Pokemon) => {
         <Link
           href={`/pokemon/${id}`}
           className="text-sky-800 hover:bg-sky-100"
-          nodeSelector={`[data-id=product-id-${id}]`}
-          viewTransitionName="banner-img"
+          nodeSelector={`[data-id=pokemon-id-${id}]`}
+          viewTransitionName="pokemon-img"
         >
           Check out
         </Link>
