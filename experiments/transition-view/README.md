@@ -1,3 +1,22 @@
+# Transitions View API Experiment
+
+> The View Transitions API provides a mechanism for easily creating animated transitions between different DOM states, while also updating the DOM contents in a single step.
+> — <cite>MDN[^1]</cite>
+
+## Keywords
+- View Transitions API, NextJS (appDir), React Server Components, Navigation API
+
+
+## Notes
+- All - View Transitions API[^2], React Server Components [^3] and Navigation API[^4] - are considered experimental at the moment, and spec can change. None of this code should be used in production.
+- Also implementation was done only to test the API. I don't see this working in production event after APIs are stable. Current implementation is flaky and heavily relies on timing, while it should be more sync.
+- Both native old History API and new Navigation API events, and Next router events are being invoked too late to run animations. At the moment on `onClick` event is required.
+- Next
+- Root animations are easy - custom transitions are a little bit harder, since its name has to unique on each page. Each custom transition name requiees some CSS to handle. Having list of items requires to manually set `view-transition-name: {name}` style property on item on click, to avoid manually creating CSS for each case.
+- It's working fine with both server and client components, but requires to data be in place during next render. Browser creates a screenshot of old view (custom transition names are treated separately) and animate to new view. In this time page is not interactive and visuals don't update.
+- Animation tab in Chrome's devtools is super useful to debug it, since it allows to slow down animation or even stop it and debug HTML and CSS.
+- NextJS discussion around this feature [^5]
+
 ## Getting Started
 
 First, run the development server:
@@ -6,25 +25,12 @@ First, run the development server:
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+By default app will run under URL: [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Links:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn/foundations/about-nextjs) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_source=github.com&utm_medium=referral&utm_campaign=turborepo-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[^1]: https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API
+[^2]: https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API#browser_compatibility
+[^3]: https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md
+[^4]: https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API#browser_compatibility
+[^5]: https://github.com/vercel/next.js/discussions/46300
