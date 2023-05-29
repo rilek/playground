@@ -16,7 +16,7 @@
   "name": "playground",
   "packageManager": "yarn@1.22.19",
   "workspaces": [
-    "apps/*",
+    "experiments/*",
     "packages/*"
   ]
 }
