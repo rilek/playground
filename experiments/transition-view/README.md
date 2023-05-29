@@ -3,7 +3,7 @@
 > The View Transitions API provides a mechanism for easily creating animated transitions between different DOM states, while also updating the DOM contents in a single step.
 > — <cite>MDN[^1]</cite>
 
-![Peek 2023-05-29 11-41](https://github.com/rilek/playground/assets/11237759/1b0a00c3-3bb0-4242-a610-68b70bd099ae)
+![Peek 2023-05-29 11-44](https://github.com/rilek/playground/assets/11237759/9ebd7f77-7727-4c5d-b192-42fd5e806c93)
 
 
 ## Keywords
